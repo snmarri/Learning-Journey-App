@@ -12,19 +12,13 @@
   },
   "files": [
     { "kind": "folder", "path": "Learning Journey App", "target-membership": [ "Learning Journey App" ] },
-    {
-      "kind": "group",
-      "name": "Products",
-      "children": [
-        { "path": "<PRODUCTS>/Learning Journey App.app", "id": "000000000000000000000120", "type": "wrapper.application", "index": false },
-      ],
-    },
+    { "path": "<PRODUCTS>/Learning Journey App.app", "id": "2753E9EB30A5976F0061FB1B", "type": "wrapper.application", "index": false },
   ],
   "targets": [
     {
       "name": "Learning Journey App",
       "id": "000000000000000100000000",
-      "product": "Products/Learning Journey App.app",
+      "product": "Learning Journey App.app",
       "product-type": "application",
       "build-phases": [
         "compile-sources",
@@ -32,6 +26,8 @@
         "resources",
       ],
       "build-settings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "LJ_Icon",
+        "ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS": "YES",
         "CODE_SIGN_STYLE": "Automatic",
         "CURRENT_PROJECT_VERSION": "1",
         "ENABLE_APP_SANDBOX": "YES",
@@ -48,6 +44,7 @@
         "INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]": "UIStatusBarStyleDefault",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "INFOPLIST_KEY_UIUserInterfaceStyle": "Dark",
         "LD_RUNPATH_SEARCH_PATHS": "@executable_path/Frameworks",
         "LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]": "@executable_path/../Frameworks",
         "MARKETING_VERSION": "1.0",
@@ -136,6 +133,8 @@
     "WATCHOS_DEPLOYMENT_TARGET": "27.2",
     "XROS_DEPLOYMENT_TARGET": "27.2",
   },
+  "products-group": [
+  ],
   "last-upgrade": "27.0",
   "last-swift-update": "27.0",
 }

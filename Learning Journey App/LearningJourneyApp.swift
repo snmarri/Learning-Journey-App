@@ -1,11 +1,21 @@
 import SwiftUI
 
-@main struct MyApp: App {
+@main
+struct LearningJourneyApp: App {
+    @State private var learningState = LearningState()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if learningState.hasGoal {
+                    NavigationStack {
+                        ActivityView()
+                    }
+                } else {
+                    OnboardingView()
+                }
+            }
+            .environment(learningState)
         }
-        
     }
-    
 }
