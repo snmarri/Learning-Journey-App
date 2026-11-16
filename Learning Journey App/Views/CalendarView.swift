@@ -2,7 +2,7 @@
 //  CalendarView.swift
 //  Learning Journey App
 //
-//  Created by SAFIA  on 05/06/1448 AH.
+//  للعرض بس، ما فيه ضغط على الأيام
 //
 import SwiftUI
 
@@ -14,38 +14,38 @@ struct CalendarView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            LazyVStack(alignment: .leading, spacing: 20) {
                 ForEach(viewModel.months(from: learningState.firstLoggedDate), id: \.self) { month in
+                    monthSection(month)
+                    Divider()
+                }
+            }
+            .padding(.horizontal, 16)
+        }
+        .navigationTitle("Activities")
+        .navigationBarTitleDisplayMode(.inline)
+    }
 
-                    Text(month.formatted(.dateTime.month(.wide).year()))
-                        .font(.headline)
+    private func monthSection(_ month: Date) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(month.formatted(.dateTime.month(.wide).year()))
+                .font(.headline)
 
-                    LazyVGrid(columns: columns) {
-                        ForEach(viewModel.weekdaySymbols, id: \.self) { symbol in
-                            Text(symbol).font(.caption).foregroundStyle(.gray)
-                        }
+            LazyVGrid(columns: columns, spacing: 8) {
+                ForEach(viewModel.weekdaySymbols, id: \.self) { symbol in
+                    Text(symbol)
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.gray)
+                }
 
-                        ForEach(Array(viewModel.days(in: month).enumerated()), id: \.offset) { _, date in
-                            if let date {
-                                Text(date.formatted(.dateTime.day()))
-                                    .foregroundStyle(color(for: learningState.status(for: date)))
-                            } else {
-                                Text("")
-                            }
-                        }
+                ForEach(Array(viewModel.days(in: month).enumerated()), id: \.offset) { _, date in
+                    if let date {
+                        DayCircle(date: date, status: learningState.status(for: date))
+                    } else {
+                        Color.clear.frame(height: 44)
                     }
                 }
             }
-            .padding()
-        }
-        .navigationTitle("Activities")
-    }
-
-    private func color(for status: Status) -> Color {
-        switch status {
-        case .learned:   .orange
-        case .freezed:   .cyan
-        case .notLogged: .white
         }
     }
 }

@@ -2,8 +2,6 @@
 //  UpdateGoalView.swift
 //  Learning Journey App
 //
-//  Created by SAFIA  on 05/06/1448 AH.
-//
 import SwiftUI
 
 struct UpdateGoalView: View {
@@ -17,26 +15,27 @@ struct UpdateGoalView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            TextField("Swift", text: $viewModel.goal.topic)
-
-            HStack {
-                ForEach(Duration.allCases, id: \.self) { item in
-                    Button(item.rawValue.capitalized) {
-                        viewModel.goal.duration = item
-                    }
-                    .foregroundStyle(viewModel.goal.duration == item ? .orange : .gray)
-                }
-            }
-
-            Button("Save") {
-                showAlert = true
-            }
-            .disabled(!viewModel.canSave)
+        VStack {
+            GoalForm(goal: $viewModel.goal)
+                .padding(.top, 24)
 
             Spacer()
         }
-        .padding()
+        .padding(.horizontal, 16)
+        .navigationTitle("Learning Goal")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    showAlert = true
+                } label: {
+                    Image(systemName: "checkmark")
+                }
+                .buttonStyle(.glassProminent)
+                .tint(.orange)
+                .disabled(!viewModel.canSave)
+            }
+        }
         .alert("Update goal", isPresented: $showAlert) {
             Button("Dismiss", role: .cancel) { }
             Button("Update") {
@@ -50,7 +49,9 @@ struct UpdateGoalView: View {
 }
 
 #Preview {
-    UpdateGoalView(currentGoal: LearningGoal(topic: "Swift", duration: .week))
-        .environment(LearningState())
-        .preferredColorScheme(.dark)
+    NavigationStack {
+        UpdateGoalView(currentGoal: LearningGoal(topic: "Swift", duration: .week))
+    }
+    .environment(LearningState())
+    .preferredColorScheme(.dark)
 }
