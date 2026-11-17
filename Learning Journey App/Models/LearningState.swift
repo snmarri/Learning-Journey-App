@@ -10,6 +10,18 @@ import Observation
 @Observable
 class LearningState {
 
+    // MARK: - Storage keys (private: محد يحفظ إلا LearningState)
+
+    private enum Keys {
+        static let topic          = "topic"
+        static let duration       = "duration"
+        static let learnedCount   = "learnedCount"
+        static let freezedCount   = "freezedCount"
+        static let lastLoggedDate = "lastLoggedDate"
+        static let dayHistory     = "dayHistory"
+        static let didMissGoal    = "didMissGoal"
+    }
+
     // MARK: - 1. Saved data
 
     var goal: LearningGoal
@@ -22,16 +34,16 @@ class LearningState {
     init() {
         let saved = UserDefaults.standard
 
-        let topic = saved.string(forKey: StorageKeys.topic) ?? ""
-        let durationText = saved.string(forKey: StorageKeys.duration) ?? ""
+        let topic = saved.string(forKey: Keys.topic) ?? ""
+        let durationText = saved.string(forKey: Keys.duration) ?? ""
         let duration = Duration(rawValue: durationText) ?? .week
 
         goal           = LearningGoal(topic: topic, duration: duration)
-        learnedCount   = saved.integer(forKey: StorageKeys.learnedCount)
-        freezedCount   = saved.integer(forKey: StorageKeys.freezedCount)
-        lastLoggedDate = saved.object(forKey: StorageKeys.lastLoggedDate) as? Date
-        dayHistory     = saved.dictionary(forKey: StorageKeys.dayHistory) as? [String: String] ?? [:]
-        didMissGoal    = saved.bool(forKey: StorageKeys.didMissGoal)
+        learnedCount   = saved.integer(forKey: Keys.learnedCount)
+        freezedCount   = saved.integer(forKey: Keys.freezedCount)
+        lastLoggedDate = saved.object(forKey: Keys.lastLoggedDate) as? Date
+        dayHistory     = saved.dictionary(forKey: Keys.dayHistory) as? [String: String] ?? [:]
+        didMissGoal    = saved.bool(forKey: Keys.didMissGoal)
 
         checkStreak()
     }
@@ -129,12 +141,12 @@ class LearningState {
 
     private func save() {
         let defaults = UserDefaults.standard
-        defaults.set(goal.topic, forKey: StorageKeys.topic)
-        defaults.set(goal.duration.rawValue, forKey: StorageKeys.duration)
-        defaults.set(learnedCount, forKey: StorageKeys.learnedCount)
-        defaults.set(freezedCount, forKey: StorageKeys.freezedCount)
-        defaults.set(lastLoggedDate, forKey: StorageKeys.lastLoggedDate)
-        defaults.set(dayHistory, forKey: StorageKeys.dayHistory)
-        defaults.set(didMissGoal, forKey: StorageKeys.didMissGoal)
+        defaults.set(goal.topic, forKey: Keys.topic)
+        defaults.set(goal.duration.rawValue, forKey: Keys.duration)
+        defaults.set(learnedCount, forKey: Keys.learnedCount)
+        defaults.set(freezedCount, forKey: Keys.freezedCount)
+        defaults.set(lastLoggedDate, forKey: Keys.lastLoggedDate)
+        defaults.set(dayHistory, forKey: Keys.dayHistory)
+        defaults.set(didMissGoal, forKey: Keys.didMissGoal)
     }
 }
